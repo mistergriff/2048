@@ -11,20 +11,18 @@ namespace _2048
             int score = 0;
             int add = 0;
             int[,] grid = new int[row, col];
-            bool failed = false;
+            //int[,] moveGrid = grid;
 
-            
+
+            addNumber();
             addNumber();
             ShowScreen();
-            addNumber();
-            ShowScreen();
 
-            /*
-            while (failed == false) 
+            while (isFailed() == false) 
             { 
 
             }
-            */
+
 
             Console.ReadKey();
 
@@ -48,16 +46,23 @@ namespace _2048
                 }
             }
 
+
             //Fonction de génération des chiffres
             void addNumber()
             {
                 Random rnd = new Random();
                 Random rndrow = new Random();
                 Random rndcol = new Random();
-                int nbrow = rndrow.Next(4);
-                int nbcol = rndcol.Next(4);
+                int nbrow = rndrow.Next(0, 4);
+                int nbcol = rndcol.Next(0, 4);
 
                 int pourcent = rnd.Next(100);
+
+                while (grid[nbrow, nbcol] != 0)
+                {
+                    nbrow = rndrow.Next(0, 4);
+                    nbcol = rndcol.Next(0, 4);
+                }
 
                 while (grid[nbrow, nbcol] == 0)
                 { 
@@ -78,6 +83,15 @@ namespace _2048
             {
                 score += addScore;
                 return score;
+            }
+
+
+            //Fonction de fail
+            bool isFailed()
+            {
+
+
+                return false;
             }
 
 
