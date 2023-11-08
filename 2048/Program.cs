@@ -10,32 +10,30 @@ namespace _2048
             const int col = 4;
             int score = 0;
             int add = 0;
-            int[,] grille = new int[row, col];
+            int[,] grid = new int[row, col];
+            bool failed = false;
+
             
-            FillGrid();
+            addNumber();
             ShowScreen();
+            addNumber();
+            ShowScreen();
+
+            /*
+            while (failed == false) 
+            { 
+
+            }
+            */
 
             Console.ReadKey();
 
-          
-
-            //Fonction de remplissage de la grille
-            void FillGrid()
-            {
-                // Remplir la grille avec des valeurs
-                for (int i = 0; i < row; i++)
-                {
-                    for (int j = 0; j < col; j++)
-                    {
-                        grille[i, j] = 0;
-                    }
-                }
-            }
 
 
             //Fonction d'affichage de la grille
             void ShowScreen()
             {
+                Console.Clear();
                 //Afficher le score
                 Console.WriteLine("Score :  {0}\n", AddScore(add));
 
@@ -44,9 +42,33 @@ namespace _2048
                 {
                     for (int j = 0; j < col; j++)
                     {
-                        Console.Write(grille[i, j] + "\t");
+                        Console.Write(grid[i, j] + "\t");
                     }
-                    Console.WriteLine(); // Passer à la ligne pour la prochaine rangée
+                    Console.WriteLine("\n"); // Passer à la ligne pour la prochaine rangée
+                }
+            }
+
+            //Fonction de génération des chiffres
+            void addNumber()
+            {
+                Random rnd = new Random();
+                Random rndrow = new Random();
+                Random rndcol = new Random();
+                int nbrow = rndrow.Next(4);
+                int nbcol = rndcol.Next(4);
+
+                int pourcent = rnd.Next(100);
+
+                while (grid[nbrow, nbcol] == 0)
+                { 
+                    if (pourcent >= 90)
+                    {
+                        grid[nbrow, nbcol] = 4;
+                    }
+                    else
+                    {
+                        grid[nbrow, nbcol] = 2;
+                    }
                 }
             }
 
