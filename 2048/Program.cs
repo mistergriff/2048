@@ -1,30 +1,48 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 
 namespace _2048
 {
     internal class Program
     {
+
+        static Random rndgrid = new Random();
+        static Random rnd = new Random();
+        const int size = 4;
+        int add = 0;
+
         static void Main(string[] args)
         {
-            const int row = 4;
-            const int col = 4;
+            bool move;
             int score = 0;
-            int add = 0;
-            int[,] grid = new int[row, col];
-            //int[,] moveGrid = grid;
+            int[,] grid = new int[size, size];
 
 
-            addNumber();
-            addNumber();
+            for (int i = 0; i < 2; i++)
+            {
+                addNumber();
+            }
             ShowScreen();
 
             while (isFailed() == false) 
-            { 
-
+            {
+                move = false;
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                ConsoleKey key = keyInfo.Key;
+                moved(key);
+                if (move) addNumber();
+                ShowScreen();
             }
 
 
-            Console.ReadKey();
+            Console.ReadLine();
+
+
+
+            //----------------------------------------------------------------//
+            //                     Fonctions pour le 2048                     //
+            //----------------------------------------------------------------//
 
 
 
@@ -33,39 +51,31 @@ namespace _2048
             {
                 Console.Clear();
                 //Afficher le score
-                Console.WriteLine("Score :  {0}\n", AddScore(add));
+                Console.WriteLine("Score :  {0}\n", score);
 
                 // Afficher la grille
-                for (int i = 0; i < row; i++)
+                for (int i = 0; i < size; i++)
                 {
-                    for (int j = 0; j < col; j++)
+                    for (int j = 0; j < size; j++)
                     {
                         Console.Write(grid[i, j] + "\t");
                     }
                     Console.WriteLine("\n"); // Passer à la ligne pour la prochaine rangée
                 }
+                Console.WriteLine("\nUtiliser les flèches directionelles, [C] pour quiter");
             }
 
 
             //Fonction de génération des chiffres
             void addNumber()
             {
-                Random rnd = new Random();
-                Random rndrow = new Random();
-                Random rndcol = new Random();
-                int nbrow = rndrow.Next(0, 4);
-                int nbcol = rndcol.Next(0, 4);
+                int nbrow = rndgrid.Next(0, 4);
+                int nbcol = rndgrid.Next(0, 4);
 
-                int pourcent = rnd.Next(100);
+                int pourcent = rnd.Next(0, 100);
 
-                while (grid[nbrow, nbcol] != 0)
+                if (grid[nbrow, nbcol] == 0)
                 {
-                    nbrow = rndrow.Next(0, 4);
-                    nbcol = rndcol.Next(0, 4);
-                }
-
-                while (grid[nbrow, nbcol] == 0)
-                { 
                     if (pourcent >= 90)
                     {
                         grid[nbrow, nbcol] = 4;
@@ -75,8 +85,148 @@ namespace _2048
                         grid[nbrow, nbcol] = 2;
                     }
                 }
+                else addNumber();
             }
 
+
+            //Fonction de vérification de la touche enfoncée
+            void moved(ConsoleKey key)
+            {
+                switch (key)
+                {
+                    case ConsoleKey.UpArrow:
+                        moveUp();
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        moveDown();
+                        break;
+
+                    case ConsoleKey.LeftArrow:
+                        moveLeft();
+                        break;
+
+                    case ConsoleKey.RightArrow:
+                        moveRight();
+                        break;
+
+                    case ConsoleKey.C:
+                        Environment.Exit(0);
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+
+            //Déplacement lors de la touche UP
+            void moveUp()
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    for (int i = 1; i < size; i++)
+                    {
+                        for (int k = i; k > 0; k--)
+                        {
+                            if (grid[k - 1, j] == 0)
+                            {
+                                grid[k - 1, j] = grid[k, j];
+                                grid[k, j] = 0;
+                                move = true;
+                            }
+                            else if (grid[k - 1, j] == grid[k, j])
+                            {
+                                grid[k - 1, j] *= 2;
+                                score += grid[k - 1, j];
+                                grid[k, j] = 0;
+                                move = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Déplacement lors de la touche DOWN
+            void moveDown()
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    for (int i = size - 2; i >= 0; i--)
+                    {
+                        for (int k = i; k < size - 1; k++)
+                        {
+                            if (grid[k + 1, j] == 0)
+                            {
+                                grid[k + 1, j] = grid[k, j];
+                                grid[k, j] = 0;
+                                move = true;
+                            }
+                            else if (grid[k + 1, j] == grid[k, j])
+                            {
+                                grid[k + 1, j] *= 2;
+                                score += grid[k + 1, j];
+                                grid[k, j] = 0;
+                                move = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Déplacement lors de la touche LEFT
+            void moveLeft()
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 1; j < size; j++)
+                    {
+                        for (int k = j; k > 0; k--)
+                        {
+                            if (grid[i, k - 1] == 0)
+                            {
+                                grid[i, k - 1] = grid[i, k];
+                                grid[i, k] = 0;
+                                move = true;
+                            }
+                            else if (grid[i, k - 1] == grid[i, k])
+                            {
+                                grid[i, k - 1] *= 2;
+                                score += grid[i, k - 1];
+                                grid[i, k] = 0;
+                                move = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //Déplacement lors de la touche RIGHT
+            void moveRight()
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = size - 2; j >= 0; j--)
+                    {
+                        for (int k = j; k < size - 1; k++)
+                        {
+                            if (grid[i, k + 1] == 0)
+                            {
+                                grid[i, k + 1] = grid[i, k];
+                                grid[i, k] = 0;
+                                move = true;
+                            }
+                            else if (grid[i, k + 1] == grid[i, k])
+                            {
+                                grid[i, k + 1] *= 2;
+                                score += grid[i, k + 1];
+                                grid[i, k] = 0;
+                                move = true;
+                            }
+                        }
+                    }
+                }
+            }
 
             //Fonction de calcul du score
             int AddScore(int addScore)
@@ -89,9 +239,19 @@ namespace _2048
             //Fonction de fail
             bool isFailed()
             {
-
-
-                return false;
+                //Vérifie si il reste des emplacements vide dans la grille
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        if (grid[i, j] == 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                Console.WriteLine("Failed");
+                return true;
             }
 
 
