@@ -6,25 +6,27 @@ namespace _2048
 {
     internal class Program
     {
-
+        //Génération des variables
         static Random rndgrid = new Random();
         static Random rnd = new Random();
         const int size = 4;
-        int add = 0;
 
+        //Fonction principale du 2048
         static void Main(string[] args)
         {
-            bool move;
+            bool move;  //Bool pour vérifier si le tableau a bougé
             int score = 0;
             int[,] grid = new int[size, size];
 
-
+            //Initialisation du tableau de base
             for (int i = 0; i < 2; i++)
             {
                 addNumber();
             }
             ShowScreen();
+            Console.WriteLine("\nUtiliser les flèches directionelles pour bouger les nombres, [C] pour quiter");
 
+            //Boucle du jeu à chaque touche pressée
             while (isFailed() == false) 
             {
                 move = false;
@@ -62,7 +64,7 @@ namespace _2048
                     }
                     Console.WriteLine("\n"); // Passer à la ligne pour la prochaine rangée
                 }
-                Console.WriteLine("\nUtiliser les flèches directionelles, [C] pour quiter");
+                
             }
 
 
@@ -227,14 +229,6 @@ namespace _2048
                     }
                 }
             }
-
-            //Fonction de calcul du score
-            int AddScore(int addScore)
-            {
-                score += addScore;
-                return score;
-            }
-
 
             //Fonction de fail
             bool isFailed()
