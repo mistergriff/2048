@@ -10,11 +10,12 @@ namespace _2048
         static Random rndgrid = new Random();
         static Random rnd = new Random();
         const int size = 4;
+        static bool move;  //Bool pour vérifier si le tableau a bougé
 
         //Fonction principale du 2048
         static void Main(string[] args)
         {
-            bool move;  //Bool pour vérifier si le tableau a bougé
+            
             int score = 0;
             int[,] grid = new int[size, size];
 
@@ -60,11 +61,61 @@ namespace _2048
                 {
                     for (int j = 0; j < size; j++)
                     {
+                        Color(grid[i, j]);
                         Console.Write(grid[i, j] + "\t");
+                        Console.ResetColor();
                     }
                     Console.WriteLine("\n"); // Passer à la ligne pour la prochaine rangée
                 }
                 
+            }
+
+
+            //Fonction de modification de la couleur en fonction du nombre affiché dans la grille
+            void Color(int valeur)
+            {
+                switch (valeur)
+                {
+                    case 0:
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        break;
+                    case 2:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        break;
+                    case 4:
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        break;
+                    case 8:
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        break;
+                    case 16:
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        break;
+                    case 32:
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        break;
+                    case 64:
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        break;
+                    case 128:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    case 256:
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        break;
+                    case 512:
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        break;
+                    case 1024:
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        break;
+                    case 2048:
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                }
             }
 
 
@@ -233,19 +284,24 @@ namespace _2048
             //Fonction de fail
             bool isFailed()
             {
-                //Vérifie si il reste des emplacements vide dans la grille
-                for (int i = 0; i < size; i++)
-                {
-                    for (int j = 0; j < size; j++)
+                
+                    //Vérifie si il reste des emplacements vide dans la grille
+                    for (int i = 0; i < size; i++)
                     {
-                        if (grid[i, j] == 0)
+                        for (int j = 0; j < size; j++)
                         {
-                            return false;
+                            if (grid[i, j] == 0)
+                            {
+                                return false;
+                            }
                         }
                     }
-                }
-                Console.WriteLine("Failed");
-                return true;
+                    if (move == false)
+                    {
+                        Console.WriteLine("Failed");
+                        return true;
+                    }
+                return false;
             }
 
 
