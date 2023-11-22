@@ -28,7 +28,7 @@ namespace _2048
             Console.WriteLine("\nUtiliser les flèches directionelles pour bouger les nombres, [C] pour quiter");
 
             //Boucle du jeu à chaque touche pressée
-            while (isFailed() == false) 
+            while (true) 
             {
                 move = false;
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -188,13 +188,6 @@ namespace _2048
                                 grid[k, j] = 0;
                                 move = true;
                             }
-                            else if (grid[k - 1, j] == grid[k, j])
-                            {
-                                grid[k - 1, j] *= 2;
-                                score += grid[k - 1, j];
-                                grid[k, j] = 0;
-                                move = true;
-                            }
                         }
                     }
                 }
@@ -212,13 +205,6 @@ namespace _2048
                             if (grid[k + 1, j] == 0)
                             {
                                 grid[k + 1, j] = grid[k, j];
-                                grid[k, j] = 0;
-                                move = true;
-                            }
-                            else if (grid[k + 1, j] == grid[k, j])
-                            {
-                                grid[k + 1, j] *= 2;
-                                score += grid[k + 1, j];
                                 grid[k, j] = 0;
                                 move = true;
                             }
@@ -242,13 +228,6 @@ namespace _2048
                                 grid[i, k] = 0;
                                 move = true;
                             }
-                            else if (grid[i, k - 1] == grid[i, k])
-                            {
-                                grid[i, k - 1] *= 2;
-                                score += grid[i, k - 1];
-                                grid[i, k] = 0;
-                                move = true;
-                            }
                         }
                     }
                 }
@@ -269,41 +248,10 @@ namespace _2048
                                 grid[i, k] = 0;
                                 move = true;
                             }
-                            else if (grid[i, k + 1] == grid[i, k])
-                            {
-                                grid[i, k + 1] *= 2;
-                                score += grid[i, k + 1];
-                                grid[i, k] = 0;
-                                move = true;
-                            }
                         }
                     }
                 }
             }
-
-            //Fonction de fail
-            bool isFailed()
-            {
-                
-                    //Vérifie si il reste des emplacements vide dans la grille
-                    for (int i = 0; i < size; i++)
-                    {
-                        for (int j = 0; j < size; j++)
-                        {
-                            if (grid[i, j] == 0)
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                    if (move == false)
-                    {
-                        Console.WriteLine("Failed");
-                        return true;
-                    }
-                return false;
-            }
-
 
         }
     }
