@@ -71,54 +71,6 @@ namespace _2048
             }
 
 
-            //Fonction de modification de la couleur en fonction du nombre affiché dans la grille
-            void Color(int valeur)
-            {
-                switch (valeur)
-                {
-                    case 0:
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        break;
-                    case 2:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        break;
-                    case 4:
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        break;
-                    case 8:
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        break;
-                    case 16:
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        break;
-                    case 32:
-                        Console.ForegroundColor = ConsoleColor.Magenta;
-                        break;
-                    case 64:
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        break;
-                    case 128:
-                        Console.ForegroundColor = ConsoleColor.White;
-                        break;
-                    case 256:
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        break;
-                    case 512:
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        break;
-                    case 1024:
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
-                        break;
-                    case 2048:
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        break;
-                    default:
-                        Console.ForegroundColor = ConsoleColor.White;
-                        break;
-                }
-            }
-
-
             //Fonction de génération des chiffres
             void addNumber()
             {
