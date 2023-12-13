@@ -36,6 +36,12 @@ namespace _2048
                 moved(key);
                 if (move) addNumber();
                 ShowScreen();
+
+                if (isWin())
+                {
+                    Console.WriteLine("Vous avez gagné.");
+                    Console.WriteLine("Vous pouvez arréter ou continuer la partie.");
+                }
             }
 
 
@@ -131,11 +137,11 @@ namespace _2048
                 {
                     if (pourcent >= 90)
                     {
-                        grid[nbrow, nbcol] = 4;
+                        grid[nbrow, nbcol] = 1024;
                     }
                     else
                     {
-                        grid[nbrow, nbcol] = 2;
+                        grid[nbrow, nbcol] = 512;
                     }
                 }
                 else addNumber();
@@ -304,6 +310,21 @@ namespace _2048
                 return false;
             }
 
+            //Fonction de victoire
+            bool isWin()
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
+                    {
+                        if (grid[i, j] >= 2048)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
 
         }
     }
