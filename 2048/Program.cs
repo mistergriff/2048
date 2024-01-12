@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
@@ -15,7 +15,7 @@ namespace _2048
         //Fonction principale du 2048
         static void Main(string[] args)
         {
-            
+
             int score = 0;
             int[,] grid = new int[size, size];
 
@@ -28,7 +28,7 @@ namespace _2048
             Console.WriteLine("\nUtiliser les flèches directionelles pour bouger les nombres, [C] pour quiter");
 
             //Boucle du jeu à chaque touche pressée
-            while (isFailed() == false) 
+            while (isFailed() == false)
             {
                 move = false;
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -73,7 +73,7 @@ namespace _2048
                     }
                     Console.WriteLine("\n"); // Passer à la ligne pour la prochaine rangée
                 }
-                
+
             }
 
 
@@ -137,11 +137,11 @@ namespace _2048
                 {
                     if (pourcent >= 90)
                     {
-                        grid[nbrow, nbcol] = 1024;
+                        grid[nbrow, nbcol] = 4;
                     }
                     else
                     {
-                        grid[nbrow, nbcol] = 512;
+                        grid[nbrow, nbcol] = 2;
                     }
                 }
                 else addNumber();
@@ -290,23 +290,23 @@ namespace _2048
             //Fonction de fail
             bool isFailed()
             {
-                
-                    //Vérifie si il reste des emplacements vide dans la grille
-                    for (int i = 0; i < size; i++)
+
+                //Vérifie si il reste des emplacements vide dans la grille
+                for (int i = 0; i < size; i++)
+                {
+                    for (int j = 0; j < size; j++)
                     {
-                        for (int j = 0; j < size; j++)
+                        if (grid[i, j] == 0)
                         {
-                            if (grid[i, j] == 0)
-                            {
-                                return false;
-                            }
+                            return false;
                         }
                     }
-                    if (move == false)
-                    {
-                        Console.WriteLine("Failed");
-                        return true;
-                    }
+                }
+                if (move == false)
+                {
+                    Console.WriteLine("Failed");
+                    return true;
+                }
                 return false;
             }
 
